@@ -11,13 +11,13 @@
             HIM
         @endslot
         @slot('li_2')
-            Dietician
+            Client
         @endslot
         @slot('li_3')
-            Update
+            Show
         @endslot
         @slot('title')
-            Dietician
+            Client
         @endslot
     @endcomponent
 
@@ -28,7 +28,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Sub User Information</h4>
+                        <h4 class="card-title">Client Information</h4>
                         <p class="text-muted mb-0">Fill The Form below to Update new Sub User
                         </p>
                     </div><!--end card-header-->
@@ -42,7 +42,7 @@
 
                                             <input required type="text" name="first_name" class="form-control"
                                                 parsley-type="text" placeholder="Enter First Name"
-                                                value="{{ $user->first_name }}">
+                                                value="{{ $user->first_name }}" disabled >
 
 
                                             <span class="text-danger">
@@ -58,7 +58,7 @@
 
                                             <input required type="text" name="last_name" class="form-control"
                                                 parsley-type="text" placeholder="Enter Last Name"
-                                                value="{{ $user->last_name }}">
+                                                value="{{ $user->last_name }}" disabled>
 
 
                                             <span class="text-danger">
@@ -74,7 +74,7 @@
                                     <label class="form-label">Email Address</label>
 
                                     <input required type="email" name="email" class="form-control" parsley-type="text"
-                                        placeholder="Enter Email Address" value="{{ $user->email }}">
+                                        placeholder="Enter Email Address" value="{{ $user->email }}" disabled>
 
 
                                     <span class="text-danger">
@@ -89,7 +89,7 @@
                                     <label class="form-label">Contact</label>
 
                                     <input required type="text" name="phone" class="form-control" parsley-type="text"
-                                        placeholder="923 *** ****" value="{{ $user->phone }}">
+                                        placeholder="923 *** ****" value="{{ $user->phone }}" disabled>
 
 
                                     <span class="text-danger">
@@ -120,18 +120,6 @@
 
                                         <span class="text-danger">
                                             @error('experience')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">about</label>
-
-                                        <textarea name="about" id="" class="form-control" rows="5">{{ $user->about }}</textarea>
-
-
-                                        <span class="text-danger">
-                                            @error('about')
                                                 {{ $message }}
                                             @enderror
                                         </span>

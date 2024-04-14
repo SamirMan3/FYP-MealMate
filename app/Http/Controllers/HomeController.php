@@ -27,7 +27,12 @@ class HomeController extends Controller
                 $client = User::where('is_user', 1)->orderBy('created_at', 'desc')->get();
                 // dd($client);
                 return view('client.index', compact('client'));
-            } else {
+            }elseif($user->is_dietician){
+                $client = User::where('is_user', 1)->where('doctor_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
+                // dd($client);
+                return view('client.index', compact('client'));
+            } 
+            else {
                 Auth::logout();
 
                 return redirect()->back()->with('error', 'Unathorized access');
@@ -66,6 +71,15 @@ class HomeController extends Controller
 
 
         return redirect()->route('index')->with('success', 'Sub User Created SuccessFully');
+    }
+    public function profile()
+    {
+        // $id= base64_decode($id);
+        $user = Auth::user();
+        if ($user->is_dietician) {
+            return view('dietician.edit', compact('user'));
+        }
+        return view('client.edit', compact('user'));
     }
     public function edit($id)
     {

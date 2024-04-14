@@ -22,6 +22,8 @@
                                     class="ti-control-record"></i>Sales</a></li>
                     </ul> --}}
                 </li>
+                @if (Auth::user()->is_super_admin)
+                    
                 <li>
                     <a href="{{route('index-dietician')}}"> <i data-feather="calendar"
                             class="align-self-center menu-icon"></i><span>Dietician</span></a>
@@ -32,6 +34,7 @@
                             class="align-self-center menu-icon"></i><span>Products</span></a>
                 
                 </li>
+                @endif
 
                 
             </ul>

@@ -33,6 +33,13 @@ class AuthController extends Controller
                 $user1->save();
                 return redirect()->intended('/')
                     ->withSuccess('Signed in');
+            } elseif ($user->is_dietician) {
+                $user1 = User::find($user->id);
+                $user1->timestamps = false;
+                $user1->last_used_at = Carbon::now();
+                $user1->save();
+                return redirect()->intended('/')
+                    ->withSuccess('Signed in');
             } else {
                 Auth::logout();
 
@@ -51,12 +58,13 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        // dd('ojkay');
         Auth::logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }

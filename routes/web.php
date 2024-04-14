@@ -21,12 +21,16 @@ Route::get('/', function () {
     return view('auth.login');
 })->name('login');
 Route::post('/login', [AuthController::class,'post_login'])->name('post_login');
+Route::post('/logout', [AuthController::class,'logout'])->name('logout');
 
 
 Route::get('/', [HomeController::class,'index'])->name('index');
+Route::get('/profile', [HomeController::class,'profile'])->name('profile')->middleware('auth');
 Route::get('/create-user', [HomeController::class,'create'])->name('create-user');
 Route::get('/edit-user/{id}', [HomeController::class,'edit'])->name('edit-user');
+Route::get('/view-user/{id}', [HomeController::class,'view'])->name('view-user');
 Route::post('/update-user', [HomeController::class,'update'])->name('update-user');
+// Route::post('/update-user', [HomeController::class,'update'])->name('update-user');
 Route::post('/store-user', [HomeController::class,'store'])->name('store-user');
 
 Route::get('/dietician', [DieticianController::class,'index'])->name('index-dietician');

@@ -74,14 +74,14 @@
                 <div class="dropdown-menu dropdown-menu-end">
                     <a class="dropdown-item" href="/pages-profile"><i data-feather="user"
                             class="align-self-center icon-xs icon-dual me-1"></i> Profile</a>
-                    <a class="dropdown-item" href="#"><i data-feather="settings"
+                    <a class="dropdown-item" href="{{route('profile')}}"><i data-feather="settings"
                             class="align-self-center icon-xs icon-dual me-1"></i> Settings</a>
                     <div class="dropdown-divider mb-0"></div>
                     <a class="dropdown-item" href="javascript:void();"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                             data-feather="power" class="align-self-center icon-xs icon-dual me-1"></i> <span
                             key="t-logout">Logout</span></a>
-                    <form id="logout-form" action="1" method="POST" style="display: none;">
+                    <form id="logout-form" action="{{route('logout')}}" method="POST" style="display: none;">
                         @csrf
                     </form>
                 </div>

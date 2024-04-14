@@ -84,6 +84,9 @@
                                              <a href="{{route('edit-user',$item->id)}}"
                                                 class="btn btn-sm btn-primary text-white"><i
                                                     class="fas fa-pencil-alt me-1"></i> Edit</a>
+                                             <a href="{{route('view-user',$item->id)}}"
+                                                class="btn btn-sm btn-success text-white"><i
+                                                    class="fas fa-pencil-alt me-1"></i> View</a>
                                             <a class="client-delete btn btn-sm btn-danger text-white"><i
                                                     class="far fa-trash-alt me-1"></i>Delete</a>
                                                 
