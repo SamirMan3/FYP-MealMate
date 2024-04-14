@@ -16,6 +16,9 @@ class AddColumnsToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->text('qualification')->nullable();
             $table->text('experience')->nullable();
+            $table->text('about')->nullable();
+            $table->integer('count')->nullable();
+            $table->tinyInteger('is_new')->nullable();
         });
     }
 
@@ -29,6 +32,9 @@ class AddColumnsToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('qualification');
             $table->dropColumn('experience');
+            $table->dropColumn('about');
+            $table->dropColumn('count');
+            $table->dropColumn('is_new');
         });
     }
 }
