@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\AppointmentLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +31,7 @@ class HomeController extends Controller
                 $client = User::where('is_user', 1)->where('doctor_id',Auth::user()->id)->orderBy('created_at', 'desc')->get();
                 // dd($client);
                 return view('client.index', compact('client'));
-            } 
+            }
             else {
                 Auth::logout();
 
@@ -124,6 +124,74 @@ class HomeController extends Controller
             ]);
             // $user->assignRole('HIMSubUser');
             return redirect()->route('index')->with('success', 'Sub User Updated SuccessFully');
+        }
+    }
+    public function view($id)
+    {
+        // $id= base64_decode($id);
+        $user = User::findOrFail($id);
+        return view('client.show', compact('user'));
+    }
+    public function generate($id)
+    {
+        // $id= base64_decode($id);
+        $user = User::findOrFail($id);
+        $data = json_decode($user->routine);
+        // dd($data->sunday);
+        return view('client.generate', compact('user','data'));
+    }
+    public function storeDiet(Request $request)
+    {
+        $id = base64_decode($request->id);
+        $user = User::findOrFail($id);
+        if ($user->is_doctor) {
+            // dd('okay');
+            return redirect()->route('index')->with('warning', 'Something went wrong');
+        } else {
+
+            $request->validate([
+                // 'org_name' => 'required',
+
+                'sunday' => 'required',
+                'monday' => 'required',
+                'tuesday' => 'required',
+                'wednesday' => 'required',
+                'thursday' => 'required',
+                'friday' => 'required',
+                'saturday' => 'required',
+                'remarks' => 'required',
+
+
+            ]);
+            $dataToStore = [
+                'sunday' => $request->input('sunday'),
+                'monday' => $request->input('monday'),
+                'tuesday' => $request->input('tuesday'),
+                'wednesday' => $request->input('wednesday'),
+                'thursday' => $request->input('thursday'),
+                'friday' => $request->input('friday'),
+                'saturday' => $request->input('saturday'),
+                'remarks' => $request->input('remarks'),
+            ];
+
+            // Convert the data to JSON
+            $routineJson = json_encode($dataToStore);
+            // dd($routineJson);
+            // Store the JSON data in the user's medical history field
+            $user->routine = $routineJson;
+            if ($user->is_new) {
+                $appointment = AppointmentLog::create([
+                    'user_id' => $user->id,
+                    'doctor_id' => $user->doctor_id,
+                ]);
+            }
+            $user->is_new = 0;
+            $user->save();
+
+
+
+            // $user->assignRole('HIMSubUser');
+            return redirect()->route('index')->with('success', 'Diet Plan generated successfully');
         }
     }
 }

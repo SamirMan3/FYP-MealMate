@@ -11,25 +11,25 @@
             HIM
         @endslot
         @slot('li_2')
-            Client
+            Generate Diet Plan
         @endslot
         @slot('li_3')
-            Show
+            User
         @endslot
         @slot('title')
-            Client
+            Generate Diet Plan
         @endslot
     @endcomponent
 
-    <form id="myForm">
-
-
+    <form action="{{ route('store-diet') }}" id="myForm" method="post" enctype="multipart/form-data" novalidate>
+        @csrf
+        <input type="hidden" name="id" value="{{ base64_encode($user->id) }}">
         <div class="row p-3">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Client Information</h4>
-                        <p class="text-muted mb-0">
+                        <h4 class="card-title">Generate Diet Plan fro : {{$user->first_name." ".$user->last_name}}</h4>
+                        <p class="text-muted mb-0"> Generate the diet plan for {{$user->first_name." ".$user->last_name}}
                         </p>
                     </div><!--end card-header-->
                     <div class="card-body bootstrap-select-1">
@@ -38,143 +38,140 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="form-label">First Name</label>
+                                            <label class="form-label">Sunday</label>
 
-                                            <input type="text" name="first_name" class="form-control" parsley-type="text"
-                                                placeholder="Enter First Name" value="{{ $user->first_name }}" disabled>
+                                            <textarea class="form-control" name="sunday">{!!$data?->sunday!!}</textarea>
 
 
                                             <span class="text-danger">
-                                                @error('first_name')
+                                                @error('sunday')
                                                     {{ $message }}
                                                 @enderror
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Last Name</label>
 
-                                            <input type="text" name="last_name" class="form-control" parsley-type="text"
-                                                placeholder="Enter Last Name" value="{{ $user->last_name }}" disabled>
-
-
-
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="form-label">Height</label>
+                                            <label class="form-label">Monday</label>
 
-                                            <input type="text" name="first_name" class="form-control" parsley-type="text"
-                                                value="{{ $user->height ?? 'N/A' }}" disabled>
-
+                                            <textarea class="form-control" name="monday">{!!$data?->monday!!}</textarea>
 
 
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Weight</label>
-
-                                            <input type="text" name="last_name" class="form-control" parsley-type="text"
-                                                value="{{ $user->weight ?? 'N/A ' }}" disabled>
-
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Email Address</label>
-
-                                            <input type="email" name="email" class="form-control" parsley-type="text"
-                                                value="{{ $user->email }}" disabled>
+                                            <span class="text-danger">
+                                                @error('monday')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
                                         </div>
                                     </div>
 
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Contact</label>
-
-                                            <input type="text" name="phone" class="form-control" parsley-type="text"
-                                                value="{{ $user->phone ?? 'N/A' }}" disabled>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="form-label">Date Of Birth</label>
+                                            <label class="form-label">Tuesday</label>
 
-                                            <input type="email" name="email" class="form-control" parsley-type="text"
-                                                 value="{{ $user->date_of_birth??'N/A' }}" disabled>
+                                            <textarea class="form-control" name="tuesday">{!!$data?->tuesday!!}</textarea>
+
+
+                                            <span class="text-danger">
+                                                @error('tuesday')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
                                         </div>
                                     </div>
 
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Goal</label>
-
-                                            <input type="text" name="phone" class="form-control" parsley-type="text"
-                                                value="{{ $user->goal ?? 'N/A' }}" disabled>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="form-label">Medical History</label>
-                                            <textarea class="form-control"  disabled>
-                                                {!!$user->medical_history ?? 'N/A' !!}
-                                            </textarea>
+                                            <label class="form-label">Wednesday</label>
+
+                                            <textarea class="form-control" name="wednesday">{!!$data?->wednesday!!}</textarea>
+
+
+                                            <span class="text-danger">
+                                                @error('wednesday')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
                                         </div>
                                     </div>
 
+                                </div>
+                                <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label class="form-label">Allergens</label>
-                                            <textarea class="form-control"  disabled>
-                                                {!! $user->allergens ?? 'N/A' !!}
-                                            </textarea>
+                                            <label class="form-label">Thursday</label>
 
-                                            {{-- <input type="text" name="phone" class="form-control" parsley-type="text"
-                                                value="" disabled> --}}
+                                            <textarea class="form-control" name="thursday">{!!$data?->thursday!!}</textarea>
+
+
+                                            <span class="text-danger">
+                                                @error('thursday')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
                                         </div>
                                     </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Friday</label>
+
+                                            <textarea class="form-control" name="friday">{!!$data?->friday!!}</textarea>
+
+
+                                            <span class="text-danger">
+                                                @error('friday')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Saturday</label>
+
+                                            <textarea class="form-control" name="saturday">{!!$data?->saturday!!}</textarea>
+
+
+                                            <span class="text-danger">
+                                                @error('saturday')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-label font-bold font-16 text-primary">Remarks</label>
+
+                                            <textarea class="form-control" name="remarks">{!!$data?->remarks!!}</textarea>
+
+
+                                            <span class="text-danger">
+                                                @error('remarks')
+                                                    {{ $message }}
+                                                @enderror
+                                            </span>
+                                        </div>
+                                    </div>
+
                                 </div>
 
-                                @if ($user->is_dietician)
-                                    <div class="form-group">
-                                        <label class="form-label">qualification</label>
-
-                                        <textarea name="qualification" id="" class="form-control" rows="5">{{ $user->qualification }}</textarea>
-
-
-                                        <span class="text-danger">
-                                            @error('qualification')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">experience</label>
-
-                                        <textarea name="experience" id="" class="form-control" rows="5">{{ $user->experience }}</textarea>
-
-
-                                        <span class="text-danger">
-                                            @error('experience')
-                                                {{ $message }}
-                                            @enderror
-                                        </span>
-                                    </div>
-                                @endif
 
 
                             </div><!-- end col -->
@@ -186,7 +183,7 @@
                             </span>
                         </div><!-- end row -->
 
-                        <a href="{{route('generate-user',$user->id)}}"><button class="btn btn-primary text-white" type="button">Generate Diet Plan</button></a>
+                        <button class="btn btn-primary text-white" type="submit">Send</button>
                     </div><!-- end card-body -->
 
                 </div> <!-- end card -->

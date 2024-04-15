@@ -3,7 +3,7 @@
     Dashboard
 @endsection
 @section('css')
-    
+
 @endsection
 @section('create_button')
     <li class="creat-btn">
@@ -62,7 +62,7 @@
                                 @foreach ($client as $item)
                                     <tr data-id="{{ $item->id }}">
                                         <td>
-                                           
+
 
                                             {{ $item->name??$item->first_name." ".$item->last_name }}
                                         </td>
@@ -70,26 +70,29 @@
                                         <td>{{ $item->phone??'N/A' }}</td>
                                         <td>{{ $item->created_at->format('d-m-Y')}}</td>
 
-                                        
+
                                         <td>
-                                       
+
                                             <span class="badge badge-soft-danger">Expired( 2 days)</span>
-                                            
-                                      
-                                            
-                                            
-                                        
+
+
+
+
+
                                         </td>
                                         <td>
-                                             <a href="{{route('edit-user',$item->id)}}"
+                                            @if (Auth::user()->is_super_admin)
+                                            <a href="{{route('edit-user',$item->id)}}"
                                                 class="btn btn-sm btn-primary text-white"><i
                                                     class="fas fa-pencil-alt me-1"></i> Edit</a>
+                                            @endif
+
                                              <a href="{{route('view-user',$item->id)}}"
                                                 class="btn btn-sm btn-success text-white"><i
                                                     class="fas fa-pencil-alt me-1"></i> View</a>
-                                            <a class="client-delete btn btn-sm btn-danger text-white"><i
-                                                    class="far fa-trash-alt me-1"></i>Delete</a>
-                                                
+                                            {{-- <a class="client-delete btn btn-sm btn-danger text-white"><i
+                                                    class="far fa-trash-alt me-1"></i>Delete</a> --}}
+
 
                                         </td>
 
@@ -106,7 +109,7 @@
     </div>
 @endsection
 @section('script')
-  
+
 
     <script>
         $('.client-delete').click(function(e) {
@@ -116,7 +119,7 @@
             swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
-               
+
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'No, cancel!',
@@ -190,7 +193,7 @@
             swal.fire({
                 title: 'Are you sure?',
                 text: "Do yo want to renew this client!",
-                
+
                 showCancelButton: true,
                 confirmButtonText: 'Yes, Renew it!',
                 cancelButtonText: 'No, cancel!',

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class AppointmentLog extends Model
 {
     use HasFactory;
+    public $timestamps= false;
+    protected $fillable = [
+        'doctor_id',
+        'user_id',
+    ];
 }
