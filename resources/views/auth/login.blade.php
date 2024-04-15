@@ -116,7 +116,7 @@
 
                                 <div class="card-body bg-light-alt text-center">
                                     <span class="text-muted d-none d-sm-inline-block">
-                                        &copy; 2023 Careers In Motions
+                                        &copy; 2024 MealMate
 
 
                                         {{-- Mannatthemes ©
