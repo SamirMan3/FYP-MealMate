@@ -46,8 +46,8 @@ class AuthController extends Controller
                 return response()->json($validator->errors(), 422);
             } else {
                 // Assuming you have the values of feet and inches
-                $feet = $data['feet']??5;
-                $inch = $data['inch']??5;
+                $feet = $data['feet'] ?? 5;
+                $inch = $data['inch'] ?? 5;
 
                 // Calculate height in inches
                 $heightInInches = $feet * 12 + $inch;
@@ -58,12 +58,12 @@ class AuthController extends Controller
                 $user->last_name = $data['last_name'];
                 $user->phone = $data['phone'];
                 $user->email = $data['email'];
-                $user->gender = $data['gender']??'';
+                $user->gender = $data['gender'] ?? '';
                 $user->height = $heightInInches;
-                $user->weight = $data['weight']??'';
+                $user->weight = $data['weight'] ?? '';
                 $user->is_user = 1;
-                $user->date_of_birth = $data['dob']??'';
-                $user->goal = $data['goal']??'';
+                $user->date_of_birth = $data['dob'] ?? '';
+                $user->goal = $data['goal'] ?? '';
                 $user->password = Hash::make($data['password']);
                 $user->save();
 
@@ -130,6 +130,8 @@ class AuthController extends Controller
 
     public function updateProfile(Request $request)
     {
+        Log::info('inside update profile');
+        Log::info($request->all());
         $access_token = $request->header('Authorization');
         $input = $request->all();
         // dd(auth('sanctum')->user()->access_token);
@@ -138,10 +140,24 @@ class AuthController extends Controller
             return response()->json(["status" => false, "message" => $message], 422);
         } else {
             $access_token = str_replace("Bearer ", "", $access_token);
+            $data = $request->all();
+            $feet = $data['feet'] ?? 5;
+                $inch = $data['inch'] ?? 5;
 
-            $data = User::findOrFail(auth('sanctum')->user()->id);
+                // Calculate height in inches
+                $heightInInches = $feet * 12 + $inch;
 
-            $data->update($input);
+            $user = User::findOrFail(auth('sanctum')->user()->id);
+            // $user->first_name = $data['first_name'];
+            // $user->last_name = $data['last_name'];
+            // $user->phone = $data['phone'];
+            $user->height = $heightInInches;
+            $user->weight = $data['weight'] ?? '';
+            $user->is_user = 1;
+            // $user->date_of_birth = $data['dob'] ?? '';
+            $user->goal = $data['goal'] ?? '';
+            // $user->password = Hash::make($data['password']);
+            $user->save();
 
             $message = "User profile updated successfully";
             return response()->json(["status" => true, "message" => $message], 200);
@@ -223,12 +239,12 @@ class AuthController extends Controller
                 $user = User::where('access_token', $access_token)->first();
                 $user->update(
                     [
-                        'allergens'=>$request->allergens??$user->allergens,
-                        'medical_history'=>$request->medical_history??$user->medical_history,
-                        'doctor_id'=>$request->doctor_id,
-                        'is_new'=>1,
+                        'allergens' => $request->allergens ?? $user->allergens,
+                        'medical_history' => $request->medical_history ?? $user->medical_history,
+                        'doctor_id' => $request->doctor_id,
+                        'is_new' => 1,
                     ]
-                    );
+                );
                 // $doctor_list = User::where('is_dietician', 1)->select('id', 'first_name', 'last_name', 'email', 'phone')->get();
                 // $my_doctor = User::where('id', $user->doctor_id)->first();
                 return response()->json(['status' => true,], 200);
@@ -303,7 +319,8 @@ class AuthController extends Controller
     {
         //
     }
-    public function getProfile(Request $request){
+    public function getProfile(Request $request)
+    {
         $access_token = $request->header('Authorization');
         if (empty($access_token)) {
             $message = "User token is missing in Api header!";
@@ -314,7 +331,7 @@ class AuthController extends Controller
 
             if ($userCount > 0) {
                 $user = User::where('access_token', $access_token)->first();
-                   $my_doctor = User::where('id', $user->doctor_id)->first();
+                $my_doctor = User::where('id', $user->doctor_id)->first();
                 return response()->json(['status' => true, 'user' => $user, 'my_doctor' => $my_doctor], 200);
             } else {
                 $message = "Please Login first!";

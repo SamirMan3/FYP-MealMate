@@ -24,5 +24,6 @@ Route::get('/getDoctor/{id}', [AuthController::class, 'getDoctor']);
 Route::get('/getProductList', [AuthController::class, 'getProductList']);
 Route::post('/user/register', [AuthController::class, 'userRegister']);
 Route::post('/user/login', [AuthController::class, 'userLogin']);
+Route::post('/user/updateProfile', [AuthController::class, 'updateProfile']);
 Route::post('/doctor/requestDiet', [AuthController::class, 'requestDiet']);
 Route::post('/user/logout', [AuthController::class, 'userLogout']);

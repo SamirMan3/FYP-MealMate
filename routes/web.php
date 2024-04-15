@@ -29,7 +29,9 @@ Route::get('/profile', [HomeController::class,'profile'])->name('profile')->midd
 Route::get('/create-user', [HomeController::class,'create'])->name('create-user');
 Route::get('/edit-user/{id}', [HomeController::class,'edit'])->name('edit-user');
 Route::get('/view-user/{id}', [HomeController::class,'view'])->name('view-user');
+Route::get('/generate-user/{id}', [HomeController::class,'generate'])->name('generate-user');
 Route::post('/update-user', [HomeController::class,'update'])->name('update-user');
+Route::post('/store-diet', [HomeController::class,'storeDiet'])->name('store-diet');
 // Route::post('/update-user', [HomeController::class,'update'])->name('update-user');
 Route::post('/store-user', [HomeController::class,'store'])->name('store-user');
 
@@ -45,4 +47,3 @@ Route::get('/create-product', [ProductController::class,'create'])->name('create
 Route::get('/edit-product/{id}', [ProductController::class,'edit'])->name('edit-product');
 Route::post('/update-product', [ProductController::class,'update'])->name('update-product');
 Route::post('/store-product', [ProductController::class,'store'])->name('store-product');
-
