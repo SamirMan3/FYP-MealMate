@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -148,13 +149,13 @@ class AuthController extends Controller
                 $heightInInches = $feet * 12 + $inch;
 
             $user = User::findOrFail(auth('sanctum')->user()->id);
-            // $user->first_name = $data['first_name'];
-            // $user->last_name = $data['last_name'];
+            $user->first_name = $data['first_name'];
+            $user->last_name = $data['last_name'];
             // $user->phone = $data['phone'];
             $user->height = $heightInInches;
             $user->weight = $data['weight'] ?? '';
             $user->is_user = 1;
-            // $user->date_of_birth = $data['dob'] ?? '';
+            $user->date_of_birth = $data['dob'] ?? '';
             $user->goal = $data['goal'] ?? '';
             // $user->password = Hash::make($data['password']);
             $user->save();
@@ -331,6 +332,7 @@ class AuthController extends Controller
 
             if ($userCount > 0) {
                 $user = User::where('access_token', $access_token)->first();
+                $user->date_of_birth = Carbon::parse($user->date_of_birth)->format('Y-m-d');
                 $my_doctor = User::where('id', $user->doctor_id)->first();
                 return response()->json(['status' => true, 'user' => $user, 'my_doctor' => $my_doctor], 200);
             } else {
