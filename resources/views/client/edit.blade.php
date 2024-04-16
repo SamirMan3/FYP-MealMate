@@ -20,7 +20,7 @@
     User
 @endslot
 @endcomponent
-   
+
     <form action="{{route('update-user')}}" id="myForm" method="post" enctype="multipart/form-data" novalidate>
         @csrf
         <input type="hidden" name="id" value="{{ base64_encode($user->id) }}">
@@ -39,12 +39,12 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label class="form-label">First Name</label>
-                                            
+
                                                 <input required type="text" name="first_name" class="form-control"
                                                     parsley-type="text" placeholder="Enter First Name"
                                                     value="{{ $user->first_name }}">
 
-                                         
+
                                             <span class="text-danger">
                                                 @error('first_name')
                                                     {{ $message }}
@@ -55,12 +55,12 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label class="form-label">Last Name</label>
-                                          
+
                                                 <input required type="text" name="last_name" class="form-control"
                                                     parsley-type="text" placeholder="Enter Last Name"
                                                     value="{{ $user->last_name }}">
 
-                                           
+
                                             <span class="text-danger">
                                                 @error('last_name')
                                                     {{ $message }}
@@ -72,11 +72,11 @@
 
                                 <div class="form-group">
                                     <label class="form-label">Email Address</label>
-                                    
+
                                         <input required type="email" name="email" class="form-control" parsley-type="text"
                                             placeholder="Enter Email Address" value="{{ $user->email }}">
 
-                                    
+
                                     <span class="text-danger">
                                         @error('email')
                                             {{ $message }}
@@ -87,11 +87,11 @@
 
                                 <div class="form-group">
                                     <label class="form-label">Contact</label>
-                                    
+
                                         <input required type="text" name="phone" class="form-control" parsley-type="text"
                                             placeholder="923 *** ****" value="{{ $user->phone }}">
 
-                                    
+
                                     <span class="text-danger">
                                         @error('phone')
                                             {{ $message }}
@@ -119,11 +119,11 @@
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label class="form-label">Password</label>
-                                                            
+
                                                                 <input type="password" name="password" id="password" class="form-control"
                                                                    placeholder="password" value="" autocomplete="off">
 
-                                                            
+
                                                             <span class="text-danger">
                                                                 @error('password')
                                                                     {{ $message }}
@@ -134,12 +134,12 @@
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label class="form-label">Confirm Password</label>
-                                                            
+
                                                                 <input  type="password" name="password_confirmation"
                                                                     class="form-control" parsley-type="password"
                                                                     placeholder="confirm password"  autocomplete="off">
 
-                                                            
+
                                                             <span class="text-danger">
                                                                 @error('password')
                                                                     {{ $message }}
@@ -164,7 +164,7 @@
                             </span>
                         </div><!-- end row -->
 
-                        <button class="btn btn-primary text-white" type="submit">Update Sub User</button>
+                        <button class="btn btn-primary text-white" type="submit">Update</button>
                     </div><!-- end card-body -->
 
                 </div> <!-- end card -->

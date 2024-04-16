@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Dietician\YourAccountCreated;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class DieticianController extends Controller
 {
@@ -64,7 +66,7 @@ class DieticianController extends Controller
             'is_dietician' => 1,
         ]);
 
-
+        Mail::to($new_user['email'])->send(new YourAccountCreated($new_user,$request->password));
         return redirect()->route('index-dietician')->with('success', 'Dietician Created SuccessFully');
     }
     public function edit($id)

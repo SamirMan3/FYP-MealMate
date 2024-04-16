@@ -204,7 +204,7 @@
                             </span>
                         </div><!-- end row -->
 
-                        <button class="btn btn-primary text-white" type="submit">Update Sub User</button>
+                        <button class="btn btn-primary text-white" type="submit">Update</button>
                     </div><!-- end card-body -->
 
                 </div> <!-- end card -->
