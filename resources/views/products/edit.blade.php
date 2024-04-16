@@ -20,7 +20,7 @@
     Dietician
 @endslot
 @endcomponent
-   
+
     <form action="{{route('update-product')}}" id="myForm" method="post" enctype="multipart/form-data" novalidate>
         @csrf
         <input type="hidden" name="id" value="{{ base64_encode($user->id) }}">
@@ -99,13 +99,33 @@
                                 </div>
 
 
-                             
+
 
 
 
                             </div><!-- end col -->
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Product</h4>
+                                        <p class="text-muted mb-0">Product image</p>
+                                    </div><!--end card-header-->
+                                    <div class="card-body">
+                                        @if ($user->image)
+                                            {{-- {{ $client->images[0]->path . $client->images[0]->name }} --}}
+                                            <input type="file" name="image" id="input-file-now-custom-2"
+                                                class="dropify" data-height="500"
+                                                data-default-file="{{ Storage::url($user->image) }}" />
+                                        @else
+                                            <input type="file" name="image" id="input-file-now-custom-2"
+                                                class="dropify" data-height="500" />
+                                        @endif
 
-                        
+                                    </div><!--end card-body-->
+                                </div><!--end card-->
+                            </div><!--end col-->
+
+
                         </div><!-- end row -->
 
                         <button class="btn btn-primary text-white" type="submit">Create Product</button>

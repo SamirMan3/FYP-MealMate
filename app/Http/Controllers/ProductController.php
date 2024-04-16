@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -56,14 +57,27 @@ class ProductController extends Controller
             // 'password' => 'required|confirmed',
 
         ]);
-        $new_user = Product::create([
+        $new_product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'goal' => $request->goal,
             'description' => $request->description,
-           
+
         ]);
 
+        if ($request->hasFile('image')) {
+            $slug = Str::slug($new_product->name) . "-";
+            $myimage = $slug . time() . '.' . $request->image->getClientOriginalExtension();
+            $path = 'uploads/product';
+            $image = $request->file('image');
+
+            // Store the image in the storage disk
+            $imagePath = $image->storeAs($path, $myimage, 'public');
+
+            // Save the image path to the $newproduct->image field
+            $new_product->image = $imagePath;
+            $new_product->save();
+        }
 
         return redirect()->route('index-product')->with('success', 'Product Created SuccessFully');
     }
@@ -78,7 +92,7 @@ class ProductController extends Controller
         // dd($request->all());
         $id = base64_decode($request->id);
         $product = Product::findOrFail($id);
-   
+
         $request->validate([
             // 'org_name' => 'required',
             // 'email' => 'required|email|unique:users,email',
@@ -89,16 +103,28 @@ class ProductController extends Controller
             // 'password' => 'required|confirmed',
 
         ]);
-          
 
-            $product->update([
-                'name' => $request->name,
-                'price' => $request->price,
-                'goal' => $request->goal,
-                'description' => $request->description,
-            ]);
-            // $user->assignRole('HIMSubUser');
-            return redirect()->route('index-product')->with('success', 'Product Updated SuccessFully');
-        
+
+        $product->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'goal' => $request->goal,
+            'description' => $request->description,
+        ]);
+        if ($request->hasFile('image')) {
+            $slug = Str::slug($product->name) . "-";
+            $myimage = $slug . time() . '.' . $request->image->getClientOriginalExtension();
+            $path = 'uploads/product';
+            $image = $request->file('image');
+
+            // Store the image in the storage disk
+            $imagePath = $image->storeAs($path, $myimage, 'public');
+
+            // Save the image path to the $newproduct->image field
+            $product->image = $imagePath;
+            $product->save();
+        }
+        // $user->assignRole('HIMSubUser');
+        return redirect()->route('index-product')->with('success', 'Product Updated SuccessFully');
     }
 }

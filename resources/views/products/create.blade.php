@@ -99,13 +99,27 @@
                                 </div>
 
 
-                             
+
 
 
 
                             </div><!-- end col -->
+                            <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Image</h4>
+                                    <p class="text-muted mb-0">Product Image</p>
+                                </div><!--end card-header-->
+                                <div class="card-body">
+                                    <input type="file" id="input-file-now-custom-2" name="image"
+                                        class="dropify" data-height="500" />
+                                </div><!--end card-body-->
+                            </div><!--end card-->
+                        </div>
 
-                        
+
+
+
                         </div><!-- end row -->
 
                         <button class="btn btn-primary text-white" type="submit">Create Product</button>
