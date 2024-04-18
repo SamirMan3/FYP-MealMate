@@ -3,7 +3,7 @@
     Dashboard
 @endsection
 @section('css')
-    
+
 @endsection
 @section('create_button')
     <li class="creat-btn">
@@ -16,7 +16,7 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            HIM
+            MealMate
         @endslot
         @slot('li_2')
         Dietician Management
@@ -52,9 +52,9 @@
                                 <tr>
                                     <th class="border-top-0">Client Name</th>
                                     <th class="border-top-0">Email</th>
-                                    <th class="border-top-0">Phone</th>
-                                    <th class="border-top-0">Expiry Date</th>
-                                    <th class="border-top-0">Status</th>
+                                    {{-- <th class="border-top-0">Phone</th> --}}
+                                    {{-- <th class="border-top-0">Expiry Date</th> --}}
+                                    {{-- <th class="border-top-0">Status</th> --}}
                                     <th class="border-top-0">Action</th>
                                 </tr><!--end tr-->
                             </thead>
@@ -62,31 +62,31 @@
                                 @foreach ($client as $item)
                                     <tr data-id="{{ $item->id }}">
                                         <td>
-                                           
+
 
                                             {{ $item->name??$item->first_name." ".$item->last_name }}
                                         </td>
                                         <td> {{ $item->email }}</td>
-                                        <td>{{ $item->phone??'N/A' }}</td>
-                                        <td>{{ $item->created_at->format('d-m-Y')}}</td>
+                                        {{-- <td>{{ $item->phone??'N/A' }}</td> --}}
+                                        {{-- <td>{{ $item->created_at->format('d-m-Y')}}</td> --}}
 
-                                        
-                                        <td>
-                                       
+
+                                        {{-- <td>
+
                                             <span class="badge badge-soft-danger">Expired( 2 days)</span>
-                                            
-                                      
-                                            
-                                            
-                                        
-                                        </td>
+
+
+
+
+
+                                        </td> --}}
                                         <td>
                                              <a href="{{route('edit-dietician',$item->id)}}"
                                                 class="btn btn-sm btn-primary text-white"><i
                                                     class="fas fa-pencil-alt me-1"></i> Edit</a>
                                             <a class="client-delete btn btn-sm btn-danger text-white"><i
                                                     class="far fa-trash-alt me-1"></i>Delete</a>
-                                                
+
 
                                         </td>
 
@@ -103,7 +103,7 @@
     </div>
 @endsection
 @section('script')
-  
+
 
     <script>
         $('.client-delete').click(function(e) {
@@ -113,7 +113,7 @@
             swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
-               
+
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'No, cancel!',
@@ -126,7 +126,7 @@
                         }
                     });
                     $.ajax({
-                        url: "#",
+                        url: "{{route('delete-dietician')}}",
                         type: "POST",
                         data: {
 
@@ -187,7 +187,7 @@
             swal.fire({
                 title: 'Are you sure?',
                 text: "Do yo want to renew this client!",
-                
+
                 showCancelButton: true,
                 confirmButtonText: 'Yes, Renew it!',
                 cancelButtonText: 'No, cancel!',

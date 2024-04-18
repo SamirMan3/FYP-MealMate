@@ -8,16 +8,16 @@
 @section('content')
 @component('components.breadcrumb')
 @slot('li_1')
-    HIM
+    MealMate
 @endslot
 @slot('li_2')
-    Dietician
+    Products
 @endslot
 @slot('li_3')
     Update
 @endslot
 @slot('title')
-    Dietician
+    Products
 @endslot
 @endcomponent
 
@@ -28,8 +28,8 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Sub User Information</h4>
-                        <p class="text-muted mb-0">Fill The Form below to Update new Sub User
+                        <h4 class="card-title">Product Information</h4>
+                        <p class="text-muted mb-0">Fill The Form below to Update new product
                         </p>
                     </div><!--end card-header-->
                     <div class="card-body bootstrap-select-1">
@@ -128,7 +128,7 @@
 
                         </div><!-- end row -->
 
-                        <button class="btn btn-primary text-white" type="submit">Create Product</button>
+                        <button class="btn btn-primary text-white" type="submit">Update Product</button>
                     </div><!-- end card-body -->
 
                 </div> <!-- end card -->

@@ -8,7 +8,7 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            HIM
+            MealMate
         @endslot
         @slot('li_2')
             User
@@ -28,8 +28,8 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Sub User Information</h4>
-                        <p class="text-muted mb-0">Fill The Form below to Update new Sub User
+                        <h4 class="card-title">User Information</h4>
+                        <p class="text-muted mb-0">Fill The Form below to create new User
                         </p>
                     </div><!--end card-header-->
                     <div class="card-body bootstrap-select-1">

@@ -8,7 +8,7 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            HIM
+            MealMate
         @endslot
         @slot('li_2')
             Dietician
