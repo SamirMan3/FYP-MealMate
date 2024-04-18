@@ -114,4 +114,20 @@ class DieticianController extends Controller
             return redirect()->route('index-dietician')->with('success', 'Dietician Updated SuccessFully');
         }
     }
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+        $dietician = User::find($request->id);
+        // dd(count($dietician->job_questions));
+
+            if ($dietician->delete()) {
+                return response()->json(['status' => 1, 'message' => 'Dietician Deleted Succcessfully']);
+            } else {
+                return response()->json(['status' => 0, 'message' => 'Unable to Delete Due to Unseen Errors']);
+            }
+
+    }
+
 }

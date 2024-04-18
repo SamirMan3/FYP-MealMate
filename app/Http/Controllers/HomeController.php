@@ -102,8 +102,10 @@ class HomeController extends Controller
                 'email' => 'required|email|unique:users,email,' . $id,
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'phone' => 'required',
+                'phone' => 'required|size:10',
 
+            ],[
+                "phone.size"=>'Phone number must be 10 digits'
             ]);
             if (isset($request->password)) {
                 $request->validate([
@@ -118,13 +120,26 @@ class HomeController extends Controller
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
-                'phone' => $request->contact,
-                'is_doctor' => 1,
+                'phone' => $request->phone,
+                // 'is_doctor' => 1,
 
             ]);
             // $user->assignRole('HIMSubUser');
-            return redirect()->route('index')->with('success', 'Sub User Updated SuccessFully');
+            return redirect()->route('index')->with('success', 'Client Updated SuccessFully');
         }
+    }
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+        $user = User::find($request->id);
+            if ($user->delete()) {
+                return response()->json(['status' => 1, 'message' => 'User Deleted Succcessfully']);
+            } else {
+                return response()->json(['status' => 0, 'message' => 'Unable to Delete Due to Unseen Errors']);
+            }
+
     }
     public function view($id)
     {
@@ -136,6 +151,10 @@ class HomeController extends Controller
     {
         // $id= base64_decode($id);
         $user = User::findOrFail($id);
+        $auth_user=Auth::user();
+        if (!$auth_user->is_dietician) {
+            return redirect()->back()->with('warning','ACCESS DENIED');
+        }
         $data = json_decode($user->routine);
         // dd($data->sunday);
         return view('client.generate', compact('user','data'));
@@ -161,7 +180,6 @@ class HomeController extends Controller
                 'saturday' => 'required',
                 'remarks' => 'required',
 
-
             ]);
             $dataToStore = [
                 'sunday' => $request->input('sunday'),
@@ -180,9 +198,13 @@ class HomeController extends Controller
             // Store the JSON data in the user's medical history field
             $user->routine = $routineJson;
             if ($user->is_new) {
-                $appointment = AppointmentLog::create([
+                $appointment = AppointmentLog::firstorcreate([
                     'user_id' => $user->id,
                     'doctor_id' => $user->doctor_id,
+                ]);
+                $doctor=User::find($user->doctor_id);
+                $doctor->update([
+                    'count'=>$doctor->count+1
                 ]);
             }
             $user->is_new = 0;
@@ -194,4 +216,19 @@ class HomeController extends Controller
             return redirect()->route('index')->with('success', 'Diet Plan generated successfully');
         }
     }
+    public function read_notification(Request $request)
+    {
+        $notificationId = $request->id;
+        $notification = Auth::user()->notifications()->findOrFail($notificationId);
+        $notification->markAsRead();
+        return response()->json(['status' => 1, 'message' => 'Notification marked as read']);
+    }
+    public function read_all(Request $request)
+    {
+        $user = $this->user;
+        $user->unreadNotifications->markAsRead();
+        return redirect()->route('index')->with('success','Notification marked as read');
+        // return response()->json(['status' => 1, 'message' => 'Notification marked as read']);
+    }
+
 }

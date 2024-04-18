@@ -3,7 +3,7 @@
     Dashboard
 @endsection
 @section('css')
-    
+
 @endsection
 @section('create_button')
     <li class="creat-btn">
@@ -62,7 +62,7 @@
                                 @foreach ($client as $item)
                                     <tr data-id="{{ $item->id }}">
                                         <td>
-                                           
+
 
                                             {{ $item->name??$item->first_name." ".$item->last_name }}
                                         </td>
@@ -70,15 +70,15 @@
                                         <td>{{ $item->phone??'N/A' }}</td>
                                         <td>{{ $item->created_at->format('d-m-Y')}}</td>
 
-                                        
+
                                         <td>
-                                       
+
                                             <span class="badge badge-soft-danger">Expired( 2 days)</span>
-                                            
-                                      
-                                            
-                                            
-                                        
+
+
+
+
+
                                         </td>
                                         <td>
                                              <a href="{{route('edit-dietician',$item->id)}}"
@@ -86,7 +86,7 @@
                                                     class="fas fa-pencil-alt me-1"></i> Edit</a>
                                             <a class="client-delete btn btn-sm btn-danger text-white"><i
                                                     class="far fa-trash-alt me-1"></i>Delete</a>
-                                                
+
 
                                         </td>
 
@@ -103,7 +103,7 @@
     </div>
 @endsection
 @section('script')
-  
+
 
     <script>
         $('.client-delete').click(function(e) {
@@ -113,7 +113,7 @@
             swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
-               
+
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'No, cancel!',
@@ -187,7 +187,7 @@
             swal.fire({
                 title: 'Are you sure?',
                 text: "Do yo want to renew this client!",
-                
+
                 showCancelButton: true,
                 confirmButtonText: 'Yes, Renew it!',
                 cancelButtonText: 'No, cancel!',
@@ -248,7 +248,7 @@
                 ) {
                     swal.fire(
                         'Cancelled',
-                        'Your imaginary file is safe :)',
+                        'Your data is safe :)',
                         'error'
                     )
                 }

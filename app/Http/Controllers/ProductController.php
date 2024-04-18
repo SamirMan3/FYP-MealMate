@@ -127,4 +127,18 @@ class ProductController extends Controller
         // $user->assignRole('HIMSubUser');
         return redirect()->route('index-product')->with('success', 'Product Updated SuccessFully');
     }
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+        $product = Product::find($request->id);
+
+            if ($product->delete()) {
+                return response()->json(['status' => 1, 'message' => 'Product Deleted Succcessfully']);
+            } else {
+                return response()->json(['status' => 0, 'message' => 'Unable to Delete Due to Unseen Errors']);
+            }
+
+    }
 }

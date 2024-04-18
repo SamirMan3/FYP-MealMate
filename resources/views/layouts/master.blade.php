@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  
+
 
 
         @include('layouts.sidebar')
@@ -62,79 +62,82 @@
                 @endif
                 <div aria-live="polite" id="warning-toast" aria-atomic="true" class="bd-example-toasts " >
                     <div class="toast-container position-fixed p-3 top-0 end-0" style="z-index: 100;">
-                      
-                        
+
+
                     </div>
                 </div>
                 @yield('content')
             </div>
             @include('layouts.footer')
         </div>
-        
-            
-       
+
+
+
     </div>
     @include('layouts.vendor-scripts')
 
     <script>
         $('.notification_link').click(function(e) {
-        e.preventDefault();
-        var id = $(this).data('id');
-        var href = $(this).attr('href');
-        
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: "#",
-                    type: "POST",
-                    data: {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var href = $(this).attr('href');
 
-                        id: id,
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ route('read_notification') }}",
+                type: "POST",
+                data: {
 
-                    },
-                    dataType: "JSON",
+                    id: id,
 
-                    // data: row.serialize(),
-                    success: function(result) {
-                        // debugger
-                        console.log(result);
-                        if (result.status) {
-                            swal.fire(
-                                'Readed',
-                                result.message,
-                                'success').then(function() {
-                                row.remove();
-                            });
-                            window.location.href = href;
-                        } else {
-                            swal.fire(
-                                'Faulure!',
-                                result.message,
-                                'warning'
-                            );
-                        }
+                },
+                dataType: "JSON",
 
-
-                    },
-                }).fail((message) => {
-                    console.log(typeof message);
-                    message = JSON.parse(message.responseText);
-                    for (var key in message.errors) {
-                        console.log(key + " - " + message.errors[key]);
-                        messages.show(message.errors[key], {
-                            title: "Error,",
+                // data: row.serialize(),
+                success: function(result) {
+                    // debugger
+                    console.log(result);
+                    if (result.status) {
+                        swal.fire(
+                            'Readed',
+                            result.message,
+                            'success').then(function() {
+                            row.remove();
                         });
+                        window.location.href = href;
+                    } else {
+                        swal.fire(
+                            'Faulure!',
+                            result.message,
+                            'warning'
+                        );
                     }
-                });
 
 
-            
-        
-    });
+                },
+            }).fail((message) => {
+                console.log(typeof message);
+                message = JSON.parse(message.responseText);
+                for (var key in message.errors) {
+                    console.log(key + " - " + message.errors[key]);
+                    messages.show(message.errors[key], {
+                        title: "Error,",
+                    });
+                }
+            });
+
+
+
+
+        });
     </script>
+
+
+
     <script>
         // Initialize Bootstrap tooltips
         $(function () {
