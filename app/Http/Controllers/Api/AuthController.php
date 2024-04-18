@@ -6,11 +6,16 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Product;
+use App\Notifications\Dietician\NewAppointment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+// use Illuminate\Notifications\Notification;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -245,7 +250,8 @@ class AuthController extends Controller
                         'doctor_id' => $request->doctor_id,
                         'is_new' => 1,
                     ]
-                );
+                );$doctor=User::find($request->doctor_id);
+                Notification::send($doctor, new NewAppointment($user));
                 // $doctor_list = User::where('is_dietician', 1)->select('id', 'first_name', 'last_name', 'email', 'phone')->get();
                 // $my_doctor = User::where('id', $user->doctor_id)->first();
                 return response()->json(['status' => true,], 200);
@@ -300,6 +306,11 @@ class AuthController extends Controller
             if ($userCount > 0) {
                 $user = User::where('access_token', $access_token)->first();
                 $product_list = Product::all();
+                foreach ($product_list as $key => $product) {
+                    if ($product->image) {
+                        $product->image=Storage::url($product->image);
+                    }
+                }
                 // $doctor = User::where('is_doctor', 1)->where('id', $id)->first();
                 //    $my_doctor = User::where('id', $user->doctor_id)->first();
                 return response()->json(['status' => true, 'product_list' => $product_list], 200);
