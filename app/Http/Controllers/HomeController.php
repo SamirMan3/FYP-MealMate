@@ -197,11 +197,11 @@ class HomeController extends Controller
             // dd($routineJson);
             // Store the JSON data in the user's medical history field
             $user->routine = $routineJson;
+            $appointment = AppointmentLog::create([
+                'user_id' => $user->id,
+                'doctor_id' => $user->doctor_id,
+            ]);
             if ($user->is_new) {
-                $appointment = AppointmentLog::firstorcreate([
-                    'user_id' => $user->id,
-                    'doctor_id' => $user->doctor_id,
-                ]);
                 $doctor=User::find($user->doctor_id);
                 $doctor->update([
                     'count'=>$doctor->count+1

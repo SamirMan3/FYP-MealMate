@@ -104,13 +104,20 @@ class DieticianController extends Controller
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
-                'phone' => $request->contact,
+                'phone' => $request->phone,
                 'qualification' => $request->qualification,
                 'experience' => $request->experience,
+                'about' => $request->about,
                 'is_user' => 0,
                 'is_doctor' => 1,
             ]);
             // $user->assignRole('HIMSubUser');
+            if (Auth::user()->is_super_admin) {
+                return redirect()->route('index-dietician')->with('success', 'Dietician Updated SuccessFully');
+            } else {
+                return redirect()->route('index')->with('success', 'Dietician Updated SuccessFully');
+            }
+
             return redirect()->route('index-dietician')->with('success', 'Dietician Updated SuccessFully');
         }
     }

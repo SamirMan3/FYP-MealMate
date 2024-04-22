@@ -27,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
         'gender',
         'height',
         'weight',
-        'ddate_of_birth',
+        'date_of_birth',
         'goal',
         'doctor_id',
         'routine',
@@ -41,7 +41,8 @@ class User extends Authenticatable implements JWTSubject
         'is_new',
         'qualification',
         'experience',
-        'count'
+        'count',
+        'about'
     ];
 
     /**

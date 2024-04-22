@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
+use App\Models\AppointmentLog;
 use App\Models\User;
 use App\Models\Product;
 use App\Notifications\Dietician\NewAppointment;
@@ -98,6 +100,20 @@ class AuthController extends Controller
     {
         if ($request->isMethod('post')) {
             $data = $request->all();
+            $validator1 = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+
+            if ($validator1->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validation error101',
+                    'errors' => $validator1->errors(),
+                ], 422); // 422 Unprocessable Entity
+            }
+
+
             if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
                 $user = User::where('email', $data['email'])->first();
                 //generate access token with passport
@@ -110,7 +126,8 @@ class AuthController extends Controller
                 return response()->json(["status" => true, "message" => $message, 'token' => $authorizationToken, "userID" => $user], 201);
             } else {
                 $message = "Email or Password incorrect!";
-                return response()->json(["status" => false, "message" => $message], 201);
+                $loginerror = "Email or Password incorrect!";
+                return response()->json(["status" => false, "message" => $message, "loginerror"=> $loginerror], 201);
             }
         }
     }
@@ -248,9 +265,20 @@ class AuthController extends Controller
                         'allergens' => $request->allergens ?? $user->allergens,
                         'medical_history' => $request->medical_history ?? $user->medical_history,
                         'doctor_id' => $request->doctor_id,
-                        'is_new' => 1,
+                        // 'is_new' => 1,
                     ]
-                );$doctor=User::find($request->doctor_id);
+                );
+                $appointment=AppointmentLog::where('user_id',$user->id)->where('doctor_id',$request->doctor_id)->get();
+                if (!$appointment->count()>0) {
+                    $user->update([
+                        'is_new'=>1,
+                    ]);
+                }else {
+                    $user->update([
+                        'is_new'=>0,
+                    ]);
+                }
+                $doctor=User::find($request->doctor_id);
                 Notification::send($doctor, new NewAppointment($user));
                 // $doctor_list = User::where('is_dietician', 1)->select('id', 'first_name', 'last_name', 'email', 'phone')->get();
                 // $my_doctor = User::where('id', $user->doctor_id)->first();
@@ -305,15 +333,21 @@ class AuthController extends Controller
 
             if ($userCount > 0) {
                 $user = User::where('access_token', $access_token)->first();
-                $product_list = Product::all();
-                foreach ($product_list as $key => $product) {
-                    if ($product->image) {
-                        $product->image=Storage::url($product->image);
-                    }
-                }
-                // $doctor = User::where('is_doctor', 1)->where('id', $id)->first();
-                //    $my_doctor = User::where('id', $user->doctor_id)->first();
-                return response()->json(['status' => true, 'product_list' => $product_list], 200);
+                $product_list = Product::where('goal',$user->goal)->get();
+                log::info($product_list);
+                // foreach ($product_list as $key => $product) {
+                //     if ($product->image) {
+                //         $product->image=Storage::url($product->image);
+                //     }
+                // }
+                $data = [
+                    'status' => 200,
+                    'products' => ProductResource::collection($product_list)->response()->getData()
+                ];
+
+                return response()->json($data, 200);
+
+                // return response()->json(['status' => true, 'product_list' => $product_list], 200);
             } else {
                 $message = "Please Login first!";
                 return response()->json(["status" => true, "message" => $message], 201);
