@@ -17,7 +17,7 @@
             Create
         @endslot
         @slot('title')
-        Dietician
+        Product
         @endslot
     @endcomponent
 
@@ -28,8 +28,8 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Sub User Information</h4>
-                        <p class="text-muted mb-0">Fill The Form below to Update new Sub User
+                        <h4 class="card-title">Product Information</h4>
+                        <p class="text-muted mb-0">Fill The Form below to add new product
                         </p>
                     </div><!--end card-header-->
                     <div class="card-body bootstrap-select-1">
@@ -85,9 +85,9 @@
                                     <label class="form-label">Category</label>
 
                                     <select class="select2" name="goal" id="">
-                                        <option value="weight gain">Weight Gain</option>
-                                        <option value="weight loss">Weight Loss</option>
-                                        <option value="weight maintain">Weight Maintain</option>
+                                        <option value="Weight Gain">Weight Gain</option>
+                                        <option value="Weight Loss">Weight Loss</option>
+                                        <option value="Weight Maintain">Weight Maintain</option>
                                     </select>
 
 
@@ -121,7 +121,7 @@
 
 
                         </div><!-- end row -->
-
+                    
                         <button class="btn btn-primary text-white" type="submit">Create Product</button>
                     </div><!-- end card-body -->
 

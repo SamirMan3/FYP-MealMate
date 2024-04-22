@@ -9,7 +9,7 @@
     <li class="creat-btn">
         <div class="nav-link">
             <a class=" btn btn-sm btn-soft-primary" href="{{route('create-product')}}" role="button"><i
-                    class="fas fa-plus me-2"></i>New Client</a>
+                    class="fas fa-plus me-2"></i>New Product</a>
         </div>
     </li>
 @endsection
@@ -35,7 +35,7 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h4 class="card-title">List Of Clients</h4>
+                            <h4 class="card-title">List Of Products</h4>
                         </div><!--end col-->
                         <div class="col-auto align-self-center">
 

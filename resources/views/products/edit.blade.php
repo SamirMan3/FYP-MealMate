@@ -85,9 +85,9 @@
                                     <label class="form-label">Category</label>
 
                                     <select class="select2" name="goal" id="">
-                                        <option value="weight gain" {{$user->goal=="weight gain"?'selected':''}}>Weight Gain</option>
-                                        <option value="weight loss" {{$user->goal=="weight loss"?'selected':''}}>Weight Loss</option>
-                                        <option value="weight maintain"{{$user->goal=="weight maintain"?'selected':''}}>Weight Maintain</option>
+                                        <option value="Weight Gain" {{$user->goal=="Weight Gain"?'selected':''}}>Weight Gain</option>
+                                        <option value="Weight Loss" {{$user->goal=="Weight Loss"?'selected':''}}>Weight Loss</option>
+                                        <option value="Weight Maintain"{{$user->goal=="Weight Maintain"?'selected':''}}>Weight Maintain</option>
                                     </select>
 
 

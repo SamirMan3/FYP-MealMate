@@ -70,7 +70,7 @@
                         alt="profile-user" class="rounded-circle thumb-xs" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="/pages-profile"><i data-feather="user"
+                    <a class="dropdown-item" href="{{route('profile')}}"><i data-feather="user"
                             class="align-self-center icon-xs icon-dual me-1"></i> Profile</a>
                     <a class="dropdown-item" href="{{route('profile')}}"><i data-feather="settings"
                             class="align-self-center icon-xs icon-dual me-1"></i> Settings</a>
