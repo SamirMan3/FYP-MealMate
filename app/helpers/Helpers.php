@@ -12,7 +12,7 @@ if (!function_exists('storageExist')) {
      *
      * @return string
      */
-    function storageExist($file='a')
+    function storageExist($file)
     {
         return Storage::exists($file);
         // return str_replace('_', ' ', $name);
@@ -28,7 +28,7 @@ if (!function_exists('storageLink')) {
      */
     function storageLink($file='a')
     {
-        if (storageExist($file??'a')) {
+        if (Storage::exists($file)) {
             return Storage::URL($file);
         } else {
             return null;
