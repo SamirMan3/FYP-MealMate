@@ -35,8 +35,8 @@ class AuthController extends Controller
             $rules = [
                 "first_name" => "required",
                 "last_name" => "required",
-                "phone" => "required|min:10|max:10",
-                "email" => "required|unique:users",
+                "phone" => "numeric|required|min:10|max:10",
+                "email" => "required|email|unique:users",
                 "password" => "required",
             ];
 
@@ -51,7 +51,13 @@ class AuthController extends Controller
 
             $validator = Validator::make($data, $rules, $customMessage);
             if ($validator->fails()) {
-                return response()->json($validator->errors(), 422);
+
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validation error101',
+                    'errors' => $validator->errors(),
+                ], 422);
+                // return response()->json($validator->errors(), 422);
             } else {
                 // Assuming you have the values of feet and inches
                 $feet = $data['feet'] ?? 5;
